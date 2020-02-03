@@ -556,6 +556,21 @@ $endif$
 \PassOptionsToPackage{hyphens}{url}
 
 %
+% packages that are required by the snippets from my manuscript (in listings)
+%
+\usepackage{chemformula} % used to typeset chemical formulae
+\setchemformula{charge-style=math}
+\usepackage{siunitx} % used to typeset values and units
+\sisetup{load-configurations=abbreviations,
+         separate-uncertainty,
+         detect-family,
+         range-phrase=\ensuremath{\text{ to }}}
+\DeclareSIUnit[per-mode=symbol]{\molar}{\mole\per\cubic\deci\metre}
+\DeclareSIUnit[per-mode=symbol]{\micromolar}{\micro\mole\per\cubic\deci\metre}
+\DeclareSIUnit{\Molar}{\textsc{m}}
+\DeclareSIUnit{\voltNHE}{\volt~vs.\ NHE}
+
+%
 % When using babel or polyglossia with biblatex, loading csquotes is recommended
 % to ensure that quoted texts are typeset according to the rules of your main language.
 %
@@ -564,7 +579,7 @@ $endif$
 %
 % captions
 %
-\definecolor{caption-color}{HTML}{777777}
+\definecolor{caption-color}{HTML}{000000}
 $if(beamer)$
 $else$
 \usepackage[font={stretch=1.2}, textfont={color=caption-color}, position=top, skip=4mm, labelfont=bf, singlelinecheck=false, justification=$if(caption-justification)$$caption-justification$$else$raggedright$endif$]{caption}
@@ -574,8 +589,9 @@ $endif$
 %
 % blockquote
 %
-\definecolor{blockquote-border}{RGB}{221,221,221}
-\definecolor{blockquote-text}{RGB}{119,119,119}
+% I redefined blockquote color to slightly darker to make reviewer's comments more prominent
+\definecolor{blockquote-border}{RGB}{119,119,119}
+\definecolor{blockquote-text}{RGB}{89,89,89}
 \usepackage{mdframed}
 \newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
 \renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
@@ -685,6 +701,18 @@ $endif$
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+
+%
+% environment for typesetting text as shown in manuscript
+% 
+
+\usepackage{changes}
+\usepackage{tcolorbox}
+% here we reuse the same colours we set for blockquotes, but lighten them up
+% to improve legibility of the text
+\newtcolorbox{manuscript}{colframe=blockquote-text, colback=blockquote-border!10!white, fontupper=\small, sharp corners}
+
 
 %
 %
@@ -809,6 +837,7 @@ $endif$
   identifierstyle = \color{listing-identifier}
 }
 $endif$
+
 
 %
 % header and footer
