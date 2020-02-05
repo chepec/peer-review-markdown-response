@@ -556,7 +556,8 @@ $endif$
 \PassOptionsToPackage{hyphens}{url}
 
 %
-% packages that are required by the snippets from my manuscript (in listings)
+% packages that are required by the snippets from my manuscript 
+% (which are included using the blockquote environment below)
 %
 \usepackage{chemformula} % used to typeset chemical formulae
 \setchemformula{charge-style=math}
@@ -593,9 +594,17 @@ $endif$
 \definecolor{blockquote-border}{RGB}{119,119,119}
 \definecolor{blockquote-text}{RGB}{89,89,89}
 \usepackage{mdframed}
-\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
-\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
-\item\relax\color{blockquote-text}\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
+% adjusted skips above and below so reviewer's comments (types as quotes) 
+% adhere better visually to our replies below them
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=20pt,skipbelow=0pt]{customblockquote}
+
+\renewenvironment{quote}{%
+  \begin{customblockquote}%
+  \list{}{\rightmargin=0em\leftmargin=0em}%
+  \item\relax\color{blockquote-text}\ignorespaces%
+}{%
+  \unskip\unskip\endlist\end{customblockquote}%
+}
 
 %
 % Source Sans Pro as the de­fault font fam­ily
@@ -711,7 +720,23 @@ $endif$
 \usepackage{tcolorbox}
 % here we reuse the same colours we set for blockquotes, but lighten them up
 % to improve legibility of the text
-\newtcolorbox{manuscript}{colframe=blockquote-text, colback=blockquote-border!10!white, fontupper=\small, sharp corners}
+\newtcolorbox{manuscriptnopage}{%
+   colframe=blockquote-text,%
+   colback=blockquote-border!10!white,%
+   fontupper=\small,%
+   sharp corners
+}
+
+\newtcolorbox{manuscript}[1]{%
+   colframe=blockquote-text,%
+   colback=blockquote-border!10!white,%
+   fontupper=\small,%
+   sharp corners,%
+   title=#1,%
+   detach title,%
+   coltitle=blockquote-text,%
+   after upper={\par\hfill\tcbtitle}%
+}
 
 
 %
